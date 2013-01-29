@@ -1,0 +1,149 @@
+﻿The goal is to implement a symbol recognition algorithm. The symbol 
+can only either be a square or a rectangle. The image always fits 
+in an 8-by-8 grid (zero relative) represented by ‘grid’. The method 
+CountBlocksSet will return the total number of blocks that are set 
+within the area of the rectangle passed in.
+
+Calling CountBlocksSet is very slow (imagine that it’s driving a 
+physical scanner) so you want to call it as few times as possible. 
+The speed does not depend on the size of the rectangle passed in to 
+CountBlocksSet.
+
+The grid looks like this:
+
+   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+---+---+---+---+---+---+---+---+---+
+ 0 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 1 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 2 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 3 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 4 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 5 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 6 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+ 7 |   |   |   |   |   |   |   |   |
+---+---+---+---+---+---+---+---+---+
+
+So, for example CountBlocksSet(0, 0, 0, 0) tests if the first block is 
+set or not. and CountBlocksSet(0, 7, 0, 7) tests the whole grid to see 
+how many blocks in the grid are set.
+
+
+<<scroll down to see an example implementation of recognize>>
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V  V
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static Shape Recognize(IGrid grid) {
+    int left = Int32.MaxValue;
+    int right = -1;
+    int bottom = Int32.MaxValue;
+    int top = -1;
+
+    for (int x = 0; x < 8; ++x) {
+        for (int y = 0; y < 8; ++y) {
+            if (grid.CountBlocksSet(x, x, y, y) == 1) {
+                left = Math.Min(left, x);
+                right = Math.Max(right, x);
+                bottom = Math.Min(bottom, y);
+                top = Math.Max(top, y);
+            }
+        }
+    }
+
+    if (right - left == top - bottom) {
+        return Shape.Square;
+    }
+
+    return Shape.Rectangle;
+}
