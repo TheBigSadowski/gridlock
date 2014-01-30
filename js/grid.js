@@ -7,10 +7,10 @@ module.exports = function(left, right, bottom, top) {
         },
         countBlocksSet: function (x1, x2, y1, y2) {
             ++totalCalls;
-            var intersectRight = Math.Min(x2, _right);
-            var intersectLeft = Math.Max(x1, _left);
-            var intersectTop = Math.Min(y2, _top);
-            var intersectBottom = Math.Max(y1, _bottom);
+            var intersectRight = Math.min(x2, right);
+            var intersectLeft = Math.max(x1, left);
+            var intersectTop = Math.min(y2, top);
+            var intersectBottom = Math.max(y1, bottom);
 
             if (intersectRight < intersectLeft)
                 return 0;
